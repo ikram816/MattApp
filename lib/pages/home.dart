@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'perhitungan.dart';
 import 'ganjil_genap.dart';
-import 'hitung_bilangan.dart';  
+import 'hitung_bilangan.dart'; 
+import 'data_kelompok.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -10,10 +11,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Menu Utama'),
-        centerTitle: true,
-      ),
+     appBar: AppBar(
+  title: const Text('Menu Utama'),
+  centerTitle: true,
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.logout),
+      tooltip: 'Keluar',
+      onPressed: () {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/',
+          (route) => false,
+        );
+      },
+    ),
+  ],
+),
 
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -49,12 +63,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   // DATA KELOMPOK
                   MenuCard(
-                    icon: Icons.groups,
-                    title: 'Data Kelompok',
-                    onTap: () {
-                      // Akan kita buat nanti
-                    },
-                  ),
+  icon: Icons.groups,
+  title: 'Data Kelompok',
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DataKelompokPage(),
+      ),
+    );
+  },
+),
 
                   // PERHITUNGAN
                   MenuCard(
