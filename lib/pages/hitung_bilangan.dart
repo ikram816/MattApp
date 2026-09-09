@@ -49,8 +49,7 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
     }
 
     setState(() {
-      // Menampilkan rincian digit yang dijumlahkan beserta totalnya
-      hasil = 'Digit ditemukan: ${daftarDigit.join(' + ')}\nTotal: $total';
+      hasil = 'Digit ditemukan:\n${daftarDigit.join(' + ')}\n\nTotal: $total';
     });
   }
 
@@ -58,7 +57,10 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jumlah Total Digit'),
+        title: const Text(
+          'Jumlah Total Digit',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
 
@@ -67,63 +69,143 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
 
         child: Column(
           children: [
-            const SizedBox(height: 20),
-
-            const Icon(
-              Icons.functions,
-              size: 70,
-            ),
-
-            const SizedBox(height: 20),
-
-            const Text(
-              'Hitung Jumlah Per Digit Angka',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: angkaController,
-              keyboardType: TextInputType.text, // Menerima teks dan angka dari keyboard
-              decoration: const InputDecoration(
-                labelText: 'Masukkan Teks atau Angka',
-                hintText: 'Contoh: abc 123 x4y5',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.text_fields),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            SizedBox(
+            // HEADER BANNER (Diselaraskan dengan Data Kelompok & Perhitungan)
+            Container(
               width: double.infinity,
-              height: 50,
-
-              child: ElevatedButton(
-                onPressed: hitungTotal,
-
-                child: const Text(
-                  'HITUNG TOTAL DIGIT',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+              padding: const EdgeInsets.all(25),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF455A64), // Dark Blue-Grey
+                    Color(0xFF78909C), // Medium Blue-Grey
+                  ],
                 ),
               ),
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.functions_rounded,
+                    size: 65,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    'Hitung Per Digit',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 25),
 
-            Text(
-              hasil,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            // KARTU FORM INPUT
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Masukkan teks campuran huruf dan angka. Sistem akan menjumlahkan setiap digit angka yang ditemukan.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  TextField(
+                    controller: angkaController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      labelText: 'Masukkan Teks atau Angka',
+                      hintText: 'Contoh: abc 123 x4y5',
+                      prefixIcon: const Icon(
+                        Icons.text_fields_rounded,
+                        color: Color(0xFF455A64),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF455A64),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF455A64),
+                        foregroundColor: Colors.white,
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: hitungTotal,
+                      child: const Text(
+                        'HITUNG TOTAL DIGIT',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // TAMPILAN HASIL
+                  if (hasil.isNotEmpty) ...[
+                    const SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFECEFF1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFCFD8DC)),
+                      ),
+                      child: Text(
+                        hasil,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF263238),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
