@@ -31,8 +31,8 @@ class DataKelompokPage extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFF1976D2),
-                    Color(0xFF42A5F5),
+                    Color(0xFF455A64), // Dark Blue-Grey / Abu-abu gelap netral
+                    Color(0xFF78909C), // Medium Blue-Grey
                   ],
                 ),
               ),
@@ -48,7 +48,7 @@ class DataKelompokPage extends StatelessWidget {
                   SizedBox(height: 15),
 
                   Text(
-                    'KELOMPOK KAMI',
+                    'MathApp Kelompok',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -58,14 +58,6 @@ class DataKelompokPage extends StatelessWidget {
                   ),
 
                   SizedBox(height: 8),
-
-                  Text(
-                    'MathApp Kelompok',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -87,7 +79,7 @@ class DataKelompokPage extends StatelessWidget {
             const SizedBox(height: 15),
 
             // ANGGOTA 1
-            MemberCard(
+            const MemberCard(
               nomor: '01',
               inisial: 'MB',
               nama: 'Muhammad Barkah Ramadhan',
@@ -97,7 +89,7 @@ class DataKelompokPage extends StatelessWidget {
             const SizedBox(height: 15),
 
             // ANGGOTA 2
-            MemberCard(
+            const MemberCard(
               nomor: '02',
               inisial: 'IPS',
               nama: 'Ikram Paishal Shidiq',
@@ -107,7 +99,7 @@ class DataKelompokPage extends StatelessWidget {
             const SizedBox(height: 15),
 
             // ANGGOTA 3
-            MemberCard(
+            const MemberCard(
               nomor: '03',
               inisial: 'MA',
               nama: 'Muhammad Aqillius Abidza HR',
@@ -115,44 +107,6 @@ class DataKelompokPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 25),
-
-            // FOOTER
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(15),
-              ),
-
-              child: const Column(
-                children: [
-                  Icon(
-                    Icons.school_rounded,
-                    size: 35,
-                  ),
-
-                  SizedBox(height: 8),
-
-                  Text(
-                    'Kelompok 3',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 5),
-
-                  Text(
-                    'Flutter Mobile Application',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
@@ -190,7 +144,8 @@ class MemberCard extends StatelessWidget {
 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            // Mengganti withOpacity dengan withValues agar tidak warning
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -204,12 +159,12 @@ class MemberCard extends StatelessWidget {
             width: 60,
             height: 60,
 
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [
-                  Color(0xFF1976D2),
-                  Color(0xFF64B5F6),
+                  Color(0xFF546E7A), // Abu-abu netral sedang
+                  Color(0xFF90A4AE), // Abu-abu netral terang
                 ],
               ),
             ),
