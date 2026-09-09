@@ -12,35 +12,45 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
 
   String hasil = '';
 
+  @override
+  void dispose() {
+    angkaController.dispose();
+    super.dispose();
+  }
+
   void hitungTotal() {
     String input = angkaController.text.trim();
 
     if (input.isEmpty) {
       setState(() {
-        hasil = 'Masukkan angka terlebih dahulu!';
+        hasil = 'Masukkan teks atau angka terlebih dahulu!';
       });
       return;
     }
 
-    List<String> daftarAngka = input.split(',');
+    // Mengambil semua karakter digit (0-9) dari teks input
+    Iterable<Match> matches = RegExp(r'\d').allMatches(input);
 
-    double total = 0;
+    if (matches.isEmpty) {
+      setState(() {
+        hasil = 'Tidak ditemukan angka dalam input!';
+      });
+      return;
+    }
 
-    for (String angka in daftarAngka) {
-      double? nilai = double.tryParse(angka.trim());
+    BigInt total = BigInt.zero;
+    List<String> daftarDigit = [];
 
-      if (nilai == null) {
-        setState(() {
-          hasil = 'Format angka tidak valid!';
-        });
-        return;
-      }
-
-      total += nilai;
+    // Menjumlahkan setiap digit angka satu per satu
+    for (Match match in matches) {
+      String digitStr = match.group(0)!;
+      daftarDigit.add(digitStr);
+      total += BigInt.parse(digitStr);
     }
 
     setState(() {
-      hasil = 'Jumlah Total: $total';
+      // Menampilkan rincian digit yang dijumlahkan beserta totalnya
+      hasil = 'Digit ditemukan: ${daftarDigit.join(' + ')}\nTotal: $total';
     });
   }
 
@@ -48,11 +58,11 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jumlah Total Angka'),
+        title: const Text('Jumlah Total Digit'),
         centerTitle: true,
       ),
 
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
 
         child: Column(
@@ -67,7 +77,7 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
             const SizedBox(height: 20),
 
             const Text(
-              'Hitung Jumlah Total Angka',
+              'Hitung Jumlah Per Digit Angka',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24,
@@ -77,25 +87,14 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
 
             const SizedBox(height: 15),
 
-            const Text(
-              'Masukkan beberapa angka dan pisahkan dengan koma (,)',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey,
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
             TextField(
               controller: angkaController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text, // Menerima teks dan angka dari keyboard
               decoration: const InputDecoration(
-                labelText: 'Masukkan Angka',
-                hintText: 'Contoh: 10, 20, 30, 40',
+                labelText: 'Masukkan Teks atau Angka',
+                hintText: 'Contoh: abc 123 x4y5',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.numbers),
+                prefixIcon: Icon(Icons.text_fields),
               ),
             ),
 
@@ -109,7 +108,7 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
                 onPressed: hitungTotal,
 
                 child: const Text(
-                  'HITUNG TOTAL',
+                  'HITUNG TOTAL DIGIT',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -123,7 +122,7 @@ class _JumlahTotalPageState extends State<JumlahTotalPage> {
               hasil,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
