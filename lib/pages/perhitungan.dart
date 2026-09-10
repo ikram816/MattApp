@@ -363,13 +363,15 @@ class _PerhitunganPageState extends State<PerhitunganPage> {
             const SizedBox(height: 20),
 
             // TOMBOL OPERASI (Grid 2x2)
-            GridView.count(
+            GridView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 2.2,
+              mainAxisExtent: 75,
+              ),
               children: [
                 _buildOperationButton('+'),
                 _buildOperationButton('-'),
